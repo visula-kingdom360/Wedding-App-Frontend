@@ -15,14 +15,13 @@ interface User {
   role: 'customer' | 'merchant' | 'admin';
 }
 
-interface LoginFormProps {
+interface MerchantLoginFormProps {
   onToggleToSignup: () => void;
   onLogin: (user: User) => void;
-  onGuestLogin?: () => void;
-  onMerchantLogin?: () => void;
+  onBackToCustomerLogin: () => void;
 }
 
-export function LoginForm({ onToggleToSignup, onLogin, onGuestLogin, onMerchantLogin }: LoginFormProps) {
+export function MerchantLoginForm({ onToggleToSignup, onLogin, onBackToCustomerLogin }: MerchantLoginFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -49,31 +48,19 @@ export function LoginForm({ onToggleToSignup, onLogin, onGuestLogin, onMerchantL
     e.preventDefault();
     
     if (validateForm()) {
-      // Mock login - determine role based on email for demo
-      let role: 'customer' | 'merchant' | 'admin' = 'customer';
+      // Mock merchant login
       let name = email.split('@')[0];
       
-      // Demo account logic
-      if (email === 'customer@demo.com') {
-        role = 'customer';
-        name = 'Demo Customer';
-      } else if (email === 'merchant@demo.com') {
-        role = 'merchant';
+      // Demo account logic - always set role to merchant for this form
+      if (email === 'merchant@demo.com') {
         name = 'Demo Merchant';
-      } else if (email === 'admin@demo.com') {
-        role = 'admin';
-        name = 'Demo Admin';
-      } else {
-        // General role detection for custom emails
-        if (email.includes('merchant')) role = 'merchant';
-        if (email.includes('admin')) role = 'admin';
       }
       
       const mockUser: User = {
-        id: `user_${Date.now()}`,
+        id: `merchant_${Date.now()}`,
         email,
         name,
-        role
+        role: 'merchant'
       };
       onLogin(mockUser);
     }
@@ -174,10 +161,10 @@ export function LoginForm({ onToggleToSignup, onLogin, onGuestLogin, onMerchantL
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-[#F5F1E8] mb-3" style={{ fontSize: '30px', fontWeight: 600, lineHeight: '1.2' }}>
-              Hello!
+              Welcome Merchant!
             </h1>
             <p className="text-[#E8E4D8]/90" style={{ fontSize: '16px', fontWeight: 400, lineHeight: '1.4' }}>
-              Welcome back, your next celebration is waiting
+              Manage your services and grow your business
             </p>
           </div>
 
@@ -239,35 +226,23 @@ export function LoginForm({ onToggleToSignup, onLogin, onGuestLogin, onMerchantL
               )}
             </div>
 
-            {/* Login Buttons */}
+            {/* Login Button */}
             <div className="pt-4 flex justify-center">
-              <div className="bg-white/60 backdrop-blur-md rounded-full p-1.5 shadow-lg border border-white/40 inline-flex gap-2">
-                <Button 
-                  type="submit" 
-                  className="px-8 py-3 bg-white hover:bg-white/95 text-[#1a1a1a] rounded-full shadow-md border-0 transition-all"
-                  style={{ fontSize: '15px', fontWeight: 500 }}
-                >
-                  User Login
-                </Button>
-                
-                <Button 
-                  type="button"
-                  onClick={onGuestLogin}
-                  className="px-8 py-3 bg-transparent hover:bg-white/50 text-[#1a1a1a] rounded-full border-0 transition-all"
-                  variant="ghost"
-                  style={{ fontSize: '15px', fontWeight: 500 }}
-                >
-                  Guest Login
-                </Button>
-              </div>
+              <Button 
+                type="submit" 
+                className="px-12 py-3 bg-white hover:bg-white/95 text-[#1a1a1a] rounded-full shadow-md border-0 transition-all"
+                style={{ fontSize: '15px', fontWeight: 500 }}
+              >
+                Merchant Login
+              </Button>
             </div>
           </form>
         </div>
 
-        {/* Register Link */}
+        {/* Bottom Links */}
         <div className="text-center space-y-4">
           <p className="text-[#E8E4D8]/90" style={{ fontSize: '15px', fontWeight: 400 }}>
-            Not a member?{' '}
+            Not a merchant yet?{' '}
             <button 
               type="button"
               onClick={onToggleToSignup}
@@ -278,15 +253,15 @@ export function LoginForm({ onToggleToSignup, onLogin, onGuestLogin, onMerchantL
             </button>
           </p>
           
-          {/* Merchant Login Link */}
+          {/* Back to Customer Login Link */}
           <div className="pt-2">
             <button 
               type="button"
-              onClick={onMerchantLogin}
+              onClick={onBackToCustomerLogin}
               className="text-[#E8E4D8]/80 hover:text-[#FFBA00] transition-colors"
               style={{ fontSize: '14px', fontWeight: 400 }}
             >
-              Login as Merchant →
+              ← Back to Customer Login
             </button>
           </div>
         </div>

@@ -15,9 +15,10 @@ interface AuthScreenProps {
   onScreenChange: (screen: 'login' | 'signup' | 'role-select') => void;
   onAuth: (user: User) => void;
   onGuestLogin?: () => void;
+  onMerchantLogin?: () => void;
 }
 
-export function AuthScreen({ currentScreen, onScreenChange, onAuth, onGuestLogin }: AuthScreenProps) {
+export function AuthScreen({ currentScreen, onScreenChange, onAuth, onGuestLogin, onMerchantLogin }: AuthScreenProps) {
   const [signupData, setSignupData] = useState({
     email: '',
     password: '',
@@ -68,6 +69,7 @@ export function AuthScreen({ currentScreen, onScreenChange, onAuth, onGuestLogin
       onToggleToSignup={() => onScreenChange('signup')}
       onLogin={onAuth}
       onGuestLogin={onGuestLogin}
+      onMerchantLogin={onMerchantLogin}
     />
   );
 }

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Input } from '../ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
@@ -208,7 +208,7 @@ export function AdminMerchants({ user }: AdminMerchantsProps) {
           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Create Complete Merchant Profile</DialogTitle>
-              <p className="text-sm text-muted-foreground">Set up a comprehensive merchant account with all business details</p>
+              <DialogDescription>Set up a comprehensive merchant account with all business details</DialogDescription>
             </DialogHeader>
             <CreateMerchantWizard
               onComplete={handleWizardComplete}

@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Eye, EyeOff } from 'lucide-react';
+import bgImage1 from 'figma:asset/cba296555e82adfe03f39b9c696b400f7d2597bd.png';
+import bgImage2 from 'figma:asset/a91063939db27eb7e6fe57a1cdef7cfe651a5b94.png';
+import bgImage3 from 'figma:asset/c8bffbdf9d2f5becb7a5d3decea4af6033ee4fcf.png';
+import bgImage4 from 'figma:asset/fe37e44bedbe482c26b2db40b4d4d57cd7066cff.png';
+import bgImage5 from 'figma:asset/bb1f82bb7f1a0727c9260f416bd368c3042e714c.png';
 
 interface SignupFormProps {
   onSignupNext: (email: string, password: string, name: string, contactNumber: string) => void;
@@ -64,26 +69,95 @@ export function SignupForm({ onSignupNext, onBackToLogin }: SignupFormProps) {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Gradient Background with Organic Shapes */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#E8F5E9] via-[#C8E6C9] to-[#A5D6A7]">
-        {/* Organic blur shapes */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-sage-green-300/40 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-sage-green-400/30 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-[400px] h-[400px] bg-sage-green-200/30 rounded-full blur-3xl"></div>
+    <div className="min-h-screen relative overflow-hidden bg-[#0C3B2E]">
+      {/* Background Images Container */}
+      <div className="absolute inset-0">
+        {/* Animated Background Images */}
+        <div className="absolute inset-0">
+          <style>{`
+            @keyframes fadeInOut1 {
+              0%, 18% { opacity: 1; }
+              20%, 100% { opacity: 0; }
+            }
+            @keyframes fadeInOut2 {
+              0%, 18% { opacity: 0; }
+              20%, 38% { opacity: 1; }
+              40%, 100% { opacity: 0; }
+            }
+            @keyframes fadeInOut3 {
+              0%, 38% { opacity: 0; }
+              40%, 58% { opacity: 1; }
+              60%, 100% { opacity: 0; }
+            }
+            @keyframes fadeInOut4 {
+              0%, 58% { opacity: 0; }
+              60%, 78% { opacity: 1; }
+              80%, 100% { opacity: 0; }
+            }
+            @keyframes fadeInOut5 {
+              0%, 78% { opacity: 0; }
+              80%, 98% { opacity: 1; }
+              100% { opacity: 0; }
+            }
+            .bg-slide-1 {
+              animation: fadeInOut1 10s ease-in-out infinite;
+            }
+            .bg-slide-2 {
+              animation: fadeInOut2 10s ease-in-out infinite;
+            }
+            .bg-slide-3 {
+              animation: fadeInOut3 10s ease-in-out infinite;
+            }
+            .bg-slide-4 {
+              animation: fadeInOut4 10s ease-in-out infinite;
+            }
+            .bg-slide-5 {
+              animation: fadeInOut5 10s ease-in-out infinite;
+            }
+          `}</style>
+          
+          <img
+            src={bgImage1} 
+            alt="" 
+            className="absolute inset-0 w-full h-full object-cover bg-slide-1"
+          />
+          <img
+            src={bgImage2} 
+            alt="" 
+            className="absolute inset-0 w-full h-full object-cover bg-slide-2"
+          />
+          <img
+            src={bgImage3} 
+            alt="" 
+            className="absolute inset-0 w-full h-full object-cover bg-slide-3"
+          />
+          <img
+            src={bgImage4} 
+            alt="" 
+            className="absolute inset-0 w-full h-full object-cover bg-slide-4"
+          />
+          <img
+            src={bgImage5} 
+            alt="" 
+            className="absolute inset-0 w-full h-full object-cover bg-slide-5"
+          />
+          
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/40"></div>
+        </div>
       </div>
 
       {/* Content */}
       <div className="relative min-h-screen flex flex-col justify-start p-6 pt-16 max-w-md mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-[#0C3B2E] mb-3" style={{ fontSize: '30px', fontWeight: 600, lineHeight: '1.2' }}>
-            Hello event lover!
+          <h1 className="text-[#F5F1E8] mb-3" style={{ fontSize: '30px', fontWeight: 600, lineHeight: '1.2' }}>
+            Hello!
           </h1>
-          <p className="text-[#0C3B2E] mb-2" style={{ fontSize: '16px', fontWeight: 400, lineHeight: '1.5' }}>
+          <p className="text-[#E8E4D8]/90 mb-2" style={{ fontSize: '16px', fontWeight: 400, lineHeight: '1.5' }}>
             Welcome to Eventcore, your celebration companion!
           </p>
-          <p className="text-[#0C3B2E]" style={{ fontSize: '16px', fontWeight: 400, lineHeight: '1.5' }}>
+          <p className="text-[#E8E4D8]/90" style={{ fontSize: '16px', fontWeight: 400, lineHeight: '1.5' }}>
             Find venues, decor, and vendors that make your event unforgettable.
           </p>
         </div>
@@ -173,7 +247,7 @@ export function SignupForm({ onSignupNext, onBackToLogin }: SignupFormProps) {
           <div className="pt-3 flex justify-center">
             <Button 
               type="submit" 
-              className="bg-white/85 hover:bg-white text-[#0C3B2E] rounded-xl px-8 py-5 border border-white/60 backdrop-blur-sm shadow-sm"
+              className="bg-white/85 hover:bg-white text-[#0C3B2E] hover:text-[#4a4a4a] rounded-xl px-8 py-5 border border-white/60 backdrop-blur-sm shadow-sm"
               variant="outline"
               style={{ fontSize: '16px', fontWeight: 500 }}
             >
@@ -184,12 +258,12 @@ export function SignupForm({ onSignupNext, onBackToLogin }: SignupFormProps) {
 
         {/* Back to Login Link */}
         <div className="mt-auto pt-8 text-center pb-6">
-          <p className="text-[#0C3B2E]" style={{ fontSize: '15px', fontWeight: 400 }}>
+          <p className="text-[#E8E4D8]/90" style={{ fontSize: '15px', fontWeight: 400 }}>
             Already have an account?{' '}
             <button 
               type="button"
               onClick={onBackToLogin}
-              className="text-[#0C3B2E] underline hover:text-[#0C3B2E]/80"
+              className="text-[#FFBA00] hover:text-[#FFD54F] underline"
               style={{ fontWeight: 500 }}
             >
               Sign in

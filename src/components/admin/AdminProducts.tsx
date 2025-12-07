@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Input } from '../ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
@@ -212,6 +212,9 @@ export function AdminProducts({ user }: AdminProductsProps) {
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>Add New {activeTab === 'products' ? 'Product' : 'Service'}</DialogTitle>
+              <DialogDescription>
+                Fill in the details below to add a new {activeTab === 'products' ? 'product' : 'service'}
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">

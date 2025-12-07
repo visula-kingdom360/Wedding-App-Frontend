@@ -8,6 +8,7 @@ import { PackageList } from './PackageList';
 import { PackageDetails } from './PackageDetails';
 import { MerchantReviews } from './MerchantReviews';
 import { MerchantProfile } from './MerchantProfile';
+import { NotificationDemo } from './NotificationDemo';
 import { ResponsiveLayout } from '../shared/ResponsiveLayout';
 
 interface User {
@@ -22,13 +23,13 @@ interface MerchantAppProps {
   onLogout: () => void;
 }
 
-export type MerchantScreen = 'dashboard' | 'profile' | 'add-service' | 'calendar' | 'notifications' | 'packages' | 'package-details' | 'reviews';
+export type MerchantScreen = 'dashboard' | 'profile' | 'add-service' | 'calendar' | 'notifications' | 'packages' | 'package-details' | 'reviews' | 'notification-demo';
 
 function getScreenTitle(screen: MerchantScreen): string {
   switch (screen) {
     case 'profile': return 'Business Profile';
     case 'add-service': return 'Add New Service';
-    case 'calendar': return 'Calendar & Availability';
+    case 'calendar': return 'Merchant View';
     case 'notifications': return 'Notifications';
     case 'packages': return 'My Packages';
     case 'package-details': return 'Package Details';
@@ -38,7 +39,7 @@ function getScreenTitle(screen: MerchantScreen): string {
 }
 
 export function MerchantApp({ user, onLogout }: MerchantAppProps) {
-  const [currentScreen, setCurrentScreen] = useState<MerchantScreen>('package-details');
+  const [currentScreen, setCurrentScreen] = useState<MerchantScreen>('dashboard');
   const [selectedPackageId, setSelectedPackageId] = useState<string | undefined>('2');
   const [packageMode, setPackageMode] = useState<'view' | 'edit'>('view');
 
@@ -55,11 +56,11 @@ export function MerchantApp({ user, onLogout }: MerchantAppProps) {
       case 'dashboard':
         return <MerchantDashboard user={user} onNavigate={setCurrentScreen} onLogout={onLogout} />;
       case 'profile':
-        return <CreateProfile onBack={() => setCurrentScreen('dashboard')} />;
+        return <MerchantProfile user={user} onBack={() => setCurrentScreen('dashboard')} onLogout={onLogout} />;
       case 'add-service':
         return <AddService onBack={() => setCurrentScreen('dashboard')} />;
       case 'calendar':
-        return <MerchantCalendar onBack={() => setCurrentScreen('dashboard')} />;
+        return <MerchantCalendar user={user} onBack={() => setCurrentScreen('dashboard')} />;
       case 'notifications':
         return <MerchantNotifications 
           user={user} 
@@ -96,8 +97,8 @@ export function MerchantApp({ user, onLogout }: MerchantAppProps) {
           user={user} 
           onBack={() => setCurrentScreen('dashboard')}
         />;
-      case 'profile':
-        return <MerchantProfile user={user} onBack={() => setCurrentScreen('dashboard')} />;
+      case 'notification-demo':
+        return <NotificationDemo onBack={() => setCurrentScreen('dashboard')} />;
       default:
         return <MerchantDashboard user={user} onNavigate={setCurrentScreen} onLogout={onLogout} />;
     }

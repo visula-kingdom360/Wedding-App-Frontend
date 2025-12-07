@@ -13,7 +13,8 @@ import {
   Search,
   Settings,
   Menu,
-  X
+  X,
+  Store
 } from 'lucide-react';
 
 interface NavigationItem {
@@ -66,7 +67,7 @@ export function ResponsiveNavigation({
         return [
           { id: 'dashboard', label: 'Home', icon: Home, section: 'main' },
           { id: 'packages', label: 'Packages', icon: Package, section: 'main' },
-          { id: 'calendar', label: 'Calendar', icon: Calendar, section: 'main' },
+          { id: 'calendar', label: 'Merchant View', icon: Store, section: 'main' },
           { 
             id: 'notifications', 
             label: 'Notifications', 

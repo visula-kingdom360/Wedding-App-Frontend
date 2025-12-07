@@ -553,31 +553,21 @@ export function VendorDetailScreen({ user, onBack, vendorId, initialPackageId, i
             {/* Stats Row */}
             <div className="grid grid-cols-2 gap-3 mb-4">
               {/* Total Followers */}
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col gap-2">
+                <p className="text-white text-xs">Total Followers</p>
                 <div className="bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-sm px-3 py-2 rounded-2xl border border-white/20">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center justify-center gap-1.5">
                     <Users className="w-4 h-4 text-[#FFBA00]" />
                     <span className="text-xl text-white">{vendor.followers}</span>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-white text-xs leading-tight">Total Followers</p>
-                  <p className="text-[10px] text-white/70">
-                    <span className="text-[#FFBA00]">{vendor.followersGrowth}</span> this month
-                  </p>
-                </div>
               </div>
               
               {/* Completed Businesses */}
-              <div className="flex items-center gap-2">
-                <div className="flex-1 text-right">
-                  <p className="text-white text-xs leading-tight">Total Bookings</p>
-                  <p className="text-[10px] text-white/70">
-                    <span className="text-[#FFBA00]">{vendor.businessGrowth}</span> completed
-                  </p>
-                </div>
+              <div className="flex flex-col gap-2">
+                <p className="text-white text-xs">Total Bookings</p>
                 <div className="bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-sm px-3 py-2 rounded-2xl border border-white/20">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center justify-center gap-1.5">
                     <span className="text-xl text-white">{vendor.completedBusinesses}+</span>
                     <Briefcase className="w-4 h-4 text-[#FFBA00]" />
                   </div>

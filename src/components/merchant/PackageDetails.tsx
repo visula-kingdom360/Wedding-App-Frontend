@@ -19,7 +19,8 @@ interface PackageDetailsProps {
 export function PackageDetails({ packageId, onBack, mode = 'edit' }: PackageDetailsProps) {
   const [formData, setFormData] = useState({
     name: packageId ? 'Great Photography' : '',
-    category: packageId ? 'Photography' : '',
+    category: packageId ? ['Photography'] : [] as string[],
+    eventTypes: packageId ? ['Wedding', 'Engagement'] : [] as string[],
     services: packageId ? 'Full day coverage, 500+ edited photos, engagement shoot, premium album, USB drive' : '',
     price: packageId ? '20,000' : '',
     description: packageId ? 'Capture every special moment with professional photographers who bring your events to life.........' : '',
@@ -31,6 +32,23 @@ export function PackageDetails({ packageId, onBack, mode = 'edit' }: PackageDeta
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleMultiSelectAdd = (field: 'category' | 'eventTypes', value: string) => {
+    setFormData(prev => {
+      const currentValues = prev[field] as string[];
+      if (!currentValues.includes(value)) {
+        return { ...prev, [field]: [...currentValues, value] };
+      }
+      return prev;
+    });
+  };
+
+  const handleMultiSelectRemove = (field: 'category' | 'eventTypes', value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: (prev[field] as string[]).filter(item => item !== value)
+    }));
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +88,18 @@ export function PackageDetails({ packageId, onBack, mode = 'edit' }: PackageDeta
     'Flowers',
     'Makeup & Hair',
     'Wedding Planning'
+  ];
+
+  const eventTypes = [
+    'Wedding',
+    'Engagement',
+    'Pre-wedding',
+    'Reception',
+    'Homecoming',
+    'Birthday',
+    'Anniversary',
+    'Corporate Event',
+    'Other'
   ];
 
   // View mode rendering - Vendor Profile Style
@@ -236,19 +266,75 @@ export function PackageDetails({ packageId, onBack, mode = 'edit' }: PackageDeta
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category" className="text-neutral-dark">Category *</Label>
-              <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
+              <Label htmlFor="eventTypes" className="text-neutral-dark">Event Type *</Label>
+              <Select value="" onValueChange={(value) => handleMultiSelectAdd('eventTypes', value)}>
                 <SelectTrigger className="bg-white border-gray-200 focus:border-forest-green-500 rounded-xl">
-                  <SelectValue placeholder="Select category" />
+                  <SelectValue placeholder="Select event types" />
                 </SelectTrigger>
                 <SelectContent>
-                  {categories.map((category) => (
+                  {eventTypes.filter(type => !formData.eventTypes.includes(type)).map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {formData.eventTypes.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {formData.eventTypes.map((type) => (
+                    <Badge
+                      key={type}
+                      variant="secondary"
+                      className="bg-forest-green-100 text-forest-green-700 hover:bg-forest-green-200 pr-1"
+                    >
+                      {type}
+                      <button
+                        type="button"
+                        onClick={() => handleMultiSelectRemove('eventTypes', type)}
+                        className="ml-1 hover:bg-forest-green-300 rounded-full p-0.5"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="category" className="text-neutral-dark">Product Category *</Label>
+              <Select value="" onValueChange={(value) => handleMultiSelectAdd('category', value)}>
+                <SelectTrigger className="bg-white border-gray-200 focus:border-forest-green-500 rounded-xl">
+                  <SelectValue placeholder="Select categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.filter(cat => !formData.category.includes(cat)).map((category) => (
                     <SelectItem key={category} value={category}>
                       {category}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+              {formData.category.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {formData.category.map((cat) => (
+                    <Badge
+                      key={cat}
+                      variant="secondary"
+                      className="bg-forest-green-100 text-forest-green-700 hover:bg-forest-green-200 pr-1"
+                    >
+                      {cat}
+                      <button
+                        type="button"
+                        onClick={() => handleMultiSelectRemove('category', cat)}
+                        className="ml-1 hover:bg-forest-green-300 rounded-full p-0.5"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -284,6 +370,18 @@ export function PackageDetails({ packageId, onBack, mode = 'edit' }: PackageDeta
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
+              <Label htmlFor="description" className="text-neutral-dark">Package Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Describe your package and what makes it special..."
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
+                className="bg-white border-gray-200 focus:border-forest-green-500 rounded-xl min-h-24"
+                rows={4}
+              />
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="services" className="text-neutral-dark">Services Included *</Label>
               <Textarea
                 id="services"
@@ -293,18 +391,6 @@ export function PackageDetails({ packageId, onBack, mode = 'edit' }: PackageDeta
                 className="bg-white border-gray-200 focus:border-forest-green-500 rounded-xl min-h-20"
                 rows={3}
                 required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description" className="text-neutral-dark">Package Description</Label>
-              <Textarea
-                id="description"
-                placeholder="Describe your package and what makes it special..."
-                value={formData.description}
-                onChange={(e) => handleInputChange('description', e.target.value)}
-                className="bg-white border-gray-200 focus:border-forest-green-500 rounded-xl min-h-24"
-                rows={4}
               />
             </div>
           </CardContent>
@@ -331,6 +417,9 @@ export function PackageDetails({ packageId, onBack, mode = 'edit' }: PackageDeta
                 <p className="text-neutral-dark font-medium mb-1">Upload Package Images</p>
                 <p className="text-sm text-muted-foreground">
                   Choose multiple images to showcase your services
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Recommended: 1200x800px or larger (16:9 ratio)
                 </p>
                 <Button 
                   type="button" 
@@ -374,7 +463,7 @@ export function PackageDetails({ packageId, onBack, mode = 'edit' }: PackageDeta
         <div className="space-y-3">
           <Button 
             type="submit" 
-            className="w-full bg-forest-green-500 hover:bg-forest-green-600 text-white rounded-2xl py-3"
+            className="w-full bg-forest-green-500 hover:bg-forest-green-600 text-white rounded-2xl py-3 mb-6"
           >
             {packageId ? 'Update Package' : 'Save Package'}
           </Button>
